@@ -2,11 +2,15 @@
 -- |Description: Internal
 module Polysemy.Log.Log where
 
+#ifndef mingw32_HOST_OS
 import Polysemy.Conc (Race)
+#endif
 import Polysemy.Internal.Tactics (liftT)
 import Polysemy.Time (GhcTime, interpretTimeGhc)
 
+#ifndef mingw32_HOST_OS
 import Polysemy.Log.Conc (interceptDataLogConc)
+#endif
 import Polysemy.Log.Effect.DataLog (DataLog (DataLog, Local), dataLog)
 import Polysemy.Log.Effect.Log (Log (Log))
 import Polysemy.Log.Data.LogEntry (LogEntry, annotate)
@@ -62,7 +66,7 @@ interpretLogDataLog' =
   interpretLogMetadataDataLog' . interpretLogLogMetadata
 {-# inline interpretLogDataLog' #-}
 
-#ifndef windows_HOST_OS
+#ifndef mingw32_HOST_OS
 -- |Interpret 'Log' into 'DataLog' concurrently, adding metadata information and wrapping with 'LogEntry'.
 interpretLogDataLogConc ::
   Members [DataLog (LogEntry LogMessage), Resource, Async, Race, Embed IO] r =>

@@ -2,7 +2,7 @@
   
 -- |Description: Internal
 module Polysemy.Log.Conc where
-#ifndef windows_HOST_OS
+#ifndef mingw32_HOST_OS
 import qualified Control.Concurrent.Async as Base
 import qualified Polysemy.Conc as Conc
 import Polysemy.Conc (Queue, Race, interpretQueueTBM)

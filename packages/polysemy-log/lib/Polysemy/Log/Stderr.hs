@@ -1,7 +1,10 @@
+{-# LANGUAGE CPP #-}
 -- |Description: Stderr Interpreters, Internal
 module Polysemy.Log.Stderr where
 
+#ifndef mingw32_HOST_OS
 import Polysemy.Conc (Race)
+#endif
 import Polysemy.Time (GhcTime, interpretTimeGhc)
 import System.IO (stderr)
 
@@ -13,7 +16,10 @@ import Polysemy.Log.Data.Severity (Severity)
 import Polysemy.Log.Format (formatLogEntry)
 import Polysemy.Log.Handle (interpretDataLogHandleWith)
 import Polysemy.Log.Level (setLogLevel)
-import Polysemy.Log.Log (interpretLogDataLog, interpretLogDataLogConc)
+import Polysemy.Log.Log (interpretLogDataLog)
+#ifndef mingw32_HOST_OS
+import Polysemy.Log.Log (interpretLogDataLogConc)
+#endif
 
 -- |Interpret 'DataLog' by printing to stderr, converting messages to 'Text' with the supplied function.
 interpretDataLogStderrWith ::
@@ -91,6 +97,7 @@ interpretLogStderr' =
   raiseUnder
 {-# inline interpretLogStderr' #-}
 
+#ifndef mingw32_HOST_OS
 -- |Like 'interpretLogStderr', but process messages concurrently.
 interpretLogStderrConc ::
   Members [Resource, Async, Race, Embed IO] r =>
@@ -114,3 +121,4 @@ interpretLogStderrLevelConc level =
   interpretLogDataLogConc 64 .
   raiseUnder2
 {-# inline interpretLogStderrLevelConc #-}
+#endif
