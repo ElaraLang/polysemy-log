@@ -90,4 +90,3 @@ interceptDataLogConc maxQueued sem = do
     !handle <- async (loggerThread @msg)
     finally (interceptDataLogConcWith @msg (raise sem)) (finalize @msg handle)
 {-# inline interceptDataLogConc #-}
-#endif
