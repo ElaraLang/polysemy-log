@@ -29,7 +29,6 @@ library
   exposed-modules:
       Polysemy.Log
       Polysemy.Log.Atomic
-      Polysemy.Log.Conc
       Polysemy.Log.Data.LogEntry
       Polysemy.Log.Data.LogMessage
       Polysemy.Log.Data.Severity
@@ -43,6 +42,9 @@ library
       Polysemy.Log.Pure
       Polysemy.Log.Stderr
       Polysemy.Log.Stdout
+  if !os(windows)
+    exposed-modules:
+      Polysemy.Log.Conc
   hs-source-dirs:
       lib
   default-extensions:
@@ -87,10 +89,12 @@ library
     , base ==4.*
     , incipit-core >=0.4 && <0.6
     , polysemy ==1.9.*
-    , polysemy-conc >=0.12 && <0.14
     , polysemy-time ==0.6.*
     , stm
     , time
+  if !os(windows)
+    build-depends:
+      polysemy-conc >=0.12 && <0.14
   mixins:
       base hiding (Prelude)
     , incipit-core (IncipitCore as Prelude)
@@ -101,12 +105,14 @@ test-suite polysemy-log-test
   type: exitcode-stdio-1.0
   main-is: Main.hs
   other-modules:
-      Polysemy.Log.Test.ConcTest
       Polysemy.Log.Test.DataLogTest
       Polysemy.Log.Test.ExampleTest
       Polysemy.Log.Test.LocalTest
       Polysemy.Log.Test.LogEntryTest
       Polysemy.Log.Test.SimpleTest
+  if !os(windows)
+    other-modules:
+      Polysemy.Log.Test.ConcTest
   hs-source-dirs:
       test
   default-extensions:
@@ -149,13 +155,15 @@ test-suite polysemy-log-test
       base ==4.*
     , incipit-core >=0.4 && <0.6
     , polysemy ==1.9.*
-    , polysemy-conc >=0.12 && <0.14
     , polysemy-log
     , polysemy-plugin >=0.4.4 && <0.5
     , polysemy-test >=0.6 && <0.10
     , polysemy-time ==0.6.*
     , tasty ==1.4.*
     , time
+  if !os(windows)
+    build-depends:
+      polysemy-conc >=0.12 && <0.14
   mixins:
       base hiding (Prelude)
     , incipit-core (IncipitCore as Prelude)
@@ -207,9 +215,11 @@ benchmark space
       base ==4.*
     , incipit-core >=0.4 && <0.6
     , polysemy ==1.9.*
-    , polysemy-conc
     , polysemy-log
     , polysemy-plugin >=0.4.4 && <0.5
+  if !os(windows)
+    build-depends:
+      polysemy-conc
   mixins:
       base hiding (Prelude)
     , incipit-core (IncipitCore as Prelude)
