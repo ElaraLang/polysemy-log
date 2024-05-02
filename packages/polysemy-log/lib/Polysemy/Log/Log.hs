@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 -- |Description: Internal
 module Polysemy.Log.Log where
 
@@ -5,7 +6,9 @@ import Polysemy.Conc (Race)
 import Polysemy.Internal.Tactics (liftT)
 import Polysemy.Time (GhcTime, interpretTimeGhc)
 
+#if windows_HOST_OS!=1
 import Polysemy.Log.Conc (interceptDataLogConc)
+#endif
 import Polysemy.Log.Effect.DataLog (DataLog (DataLog, Local), dataLog)
 import Polysemy.Log.Effect.Log (Log (Log))
 import Polysemy.Log.Data.LogEntry (LogEntry, annotate)
@@ -61,6 +64,7 @@ interpretLogDataLog' =
   interpretLogMetadataDataLog' . interpretLogLogMetadata
 {-# inline interpretLogDataLog' #-}
 
+#if windows_HOST_OS!=1
 -- |Interpret 'Log' into 'DataLog' concurrently, adding metadata information and wrapping with 'LogEntry'.
 interpretLogDataLogConc ::
   Members [DataLog (LogEntry LogMessage), Resource, Async, Race, Embed IO] r =>
@@ -73,6 +77,7 @@ interpretLogDataLogConc maxQueued =
   interpretLogLogMetadata .
   raiseUnder2
 {-# inline interpretLogDataLogConc #-}
+#endif
 
 -- |Helper for maintaining a context function as state that is applied to each logged message, allowing the context of a
 -- block to be modified.
