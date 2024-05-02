@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {-# LANGUAGE CPP #-}
 -- |Description: Internal
 module Polysemy.Log.Log where
