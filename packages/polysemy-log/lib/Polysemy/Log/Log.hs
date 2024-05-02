@@ -6,9 +6,7 @@ import Polysemy.Conc (Race)
 import Polysemy.Internal.Tactics (liftT)
 import Polysemy.Time (GhcTime, interpretTimeGhc)
 
-#if windows_HOST_OS!=1
 import Polysemy.Log.Conc (interceptDataLogConc)
-#endif
 import Polysemy.Log.Effect.DataLog (DataLog (DataLog, Local), dataLog)
 import Polysemy.Log.Effect.Log (Log (Log))
 import Polysemy.Log.Data.LogEntry (LogEntry, annotate)
@@ -64,7 +62,7 @@ interpretLogDataLog' =
   interpretLogMetadataDataLog' . interpretLogLogMetadata
 {-# inline interpretLogDataLog' #-}
 
-#if windows_HOST_OS!=1
+#ifndef windows_HOST_OS
 -- |Interpret 'Log' into 'DataLog' concurrently, adding metadata information and wrapping with 'LogEntry'.
 interpretLogDataLogConc ::
   Members [DataLog (LogEntry LogMessage), Resource, Async, Race, Embed IO] r =>
