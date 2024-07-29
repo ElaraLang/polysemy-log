@@ -1,10 +1,7 @@
-{-# LANGUAGE CPP #-}
 -- |Description: Stdout Interpreters, Internal
 module Polysemy.Log.Stdout where
 
-#ifndef mingw32_HOST_OS
-import Polysemy.Conc (Race)
-#endif
+
 import Polysemy.Time (GhcTime, interpretTimeGhc)
 import System.IO (stdout)
 
@@ -17,9 +14,6 @@ import Polysemy.Log.Format (formatLogEntry)
 import Polysemy.Log.Handle (interpretDataLogHandleWith)
 import Polysemy.Log.Level (setLogLevel)
 import Polysemy.Log.Log (interpretLogDataLog)
-#ifndef mingw32_HOST_OS
-import Polysemy.Log.Log (interpretLogDataLogConc)
-#endif
 
 -- |Interpret 'DataLog' by printing to stdout, converting messages to 'Text' with the supplied function.
 interpretDataLogStdoutWith ::
@@ -96,27 +90,3 @@ interpretLogStdout' =
   interpretLogStdout .
   raiseUnder
 {-# inline interpretLogStdout' #-}
-
-#ifndef mingw32_HOST_OS
--- |Like 'interpretLogStdout', but process messages concurrently.
-interpretLogStdoutConc ::
-  Members [Resource, Async, Race, Embed IO] r =>
-  InterpreterFor Log r
-interpretLogStdoutConc =
-  interpretDataLogStdoutWith formatLogEntry .
-  interpretLogDataLogConc 64 .
-  raiseUnder
-{-# inline interpretLogStdoutConc #-}
-
--- |Like 'interpretLogStdout', but process messages concurrently.
-interpretLogStdoutLevelConc ::
-  Members [Resource, Async, Race, Embed IO] r =>
-  Maybe Severity ->
-  InterpreterFor Log r
-interpretLogStdoutLevelConc level =
-  interpretDataLogStdoutWith formatLogEntry .
-  setLogLevel level .
-  interpretLogDataLogConc 64 .
-  raiseUnder
-{-# inline interpretLogStdoutLevelConc #-}
-#endif

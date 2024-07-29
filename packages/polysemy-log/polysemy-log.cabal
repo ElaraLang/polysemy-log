@@ -42,9 +42,6 @@ library
       Polysemy.Log.Pure
       Polysemy.Log.Stderr
       Polysemy.Log.Stdout
-  if !os(windows)
-    exposed-modules:
-      Polysemy.Log.Conc
   hs-source-dirs:
       lib
   default-extensions:
@@ -84,7 +81,7 @@ library
       NoFieldSelectors
   ghc-options: -Wall -Widentities -Wincomplete-uni-patterns -Wmissing-deriving-strategies -Wredundant-constraints -Wunused-type-patterns -Wunused-packages
   build-depends:
-      ansi-terminal >=0.10.3 && <0.12
+      ansi-terminal >=0.10.3
     , async
     , base ==4.*
     , incipit-core >=0.4 && <0.6

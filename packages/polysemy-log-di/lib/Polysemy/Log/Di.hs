@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP #-}
 -- |Description: /polysemy-log/ adapters for /di/
 module Polysemy.Log.Di (
   -- * Introduction
@@ -7,9 +6,6 @@ module Polysemy.Log.Di (
   -- * Interpreters
   interpretLogDi,
   interpretLogDi',
-  #ifndef mingw32_HOST_OS
-  interpretLogDiConc,
-  #endif
   interpretDataLogDi,
   interpretDiAtomic,
   interpretDiAtomic'
@@ -17,9 +13,6 @@ module Polysemy.Log.Di (
 
 import Polysemy.Log.Di.Atomic (interpretDiAtomic, interpretDiAtomic')
 import Polysemy.Log.Di.Di (interpretDataLogDi, interpretLogDi, interpretLogDi')
-#ifndef mingw32_HOST_OS
-import Polysemy.Log.Di.Di (interpretLogDiConc)
-#endif
 -- $intro
 -- This package is a [di](https://hackage.haskell.org/package/di-polysemy) adapter for
 -- [polysemy-log](https://hackage.haskell.org/package/polysemy-log), providing interpreters that convert

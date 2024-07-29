@@ -2,9 +2,7 @@
 -- |Description: Stderr Interpreters, Internal
 module Polysemy.Log.Stderr where
 
-#ifndef mingw32_HOST_OS
-import Polysemy.Conc (Race)
-#endif
+
 import Polysemy.Time (GhcTime, interpretTimeGhc)
 import System.IO (stderr)
 
@@ -17,9 +15,6 @@ import Polysemy.Log.Format (formatLogEntry)
 import Polysemy.Log.Handle (interpretDataLogHandleWith)
 import Polysemy.Log.Level (setLogLevel)
 import Polysemy.Log.Log (interpretLogDataLog)
-#ifndef mingw32_HOST_OS
-import Polysemy.Log.Log (interpretLogDataLogConc)
-#endif
 
 -- |Interpret 'DataLog' by printing to stderr, converting messages to 'Text' with the supplied function.
 interpretDataLogStderrWith ::
@@ -96,30 +91,3 @@ interpretLogStderr' =
   interpretLogStderr .
   raiseUnder
 {-# inline interpretLogStderr' #-}
-
-#ifndef mingw32_HOST_OS
--- |Like 'interpretLogStderr', but process messages concurrently.
-interpretLogStderrConc ::
-  Members [Resource, Async, Race, Embed IO] r =>
-  InterpreterFor Log r
-interpretLogStderrConc =
-  interpretTimeGhc .
-  interpretDataLogStderrWith formatLogEntry .
-  interpretLogDataLogConc 64 .
-  raiseUnder2
-{-# inline interpretLogStderrConc #-}
-
--- |Like 'interpretLogStderr', but process messages concurrently.
-interpretLogStderrLevelConc ::
-  Members [Resource, Async, Race, Embed IO] r =>
-  Maybe Severity ->
-  InterpreterFor Log r
-interpretLogStderrLevelConc level =
-  interpretTimeGhc .
-  interpretDataLogStderrWith formatLogEntry .
-  setLogLevel level .
-  interpretLogDataLogConc 64 .
-  raiseUnder2
-{-# inline interpretLogStderrLevelConc #-}
-
-#endif

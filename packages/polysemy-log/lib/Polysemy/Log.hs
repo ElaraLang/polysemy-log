@@ -1,6 +1,6 @@
-{-# language NoImplicitPrelude #-}
-{-# language CPP #-}
-{-# options_haddock prune #-}
+
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# OPTIONS_HADDOCK prune #-}
 
 -- |Description: Polysemy Effects for Logging
 module Polysemy.Log (
@@ -44,19 +44,11 @@ module Polysemy.Log (
   -- ** Interpreters
   interpretLogStderrWith,
   interpretLogStderrLevelWith,
-  #ifndef mingw32_HOST_OS
-  interpretLogStderrConc,
-  interpretLogStderrLevelConc,
-  #endif
   interpretLogStderr,
   interpretLogStderrLevel,
   interpretLogStderr',
   interpretLogStdoutWith,
   interpretLogStdoutLevelWith,
-  #ifndef mingw32_HOST_OS
-  interpretLogStdoutConc,
-  interpretLogStdoutLevelConc,
-  #endif
   interpretLogStdout,
   interpretLogStdoutLevel,
   interpretLogStdout',
@@ -67,17 +59,9 @@ module Polysemy.Log (
   interpretLogAtomic,
   interpretLogAtomic',
 
-  #ifndef mingw32_HOST_OS
-  -- * Concurrent Logging
-  interceptDataLogConc,
-  interpretLogDataLogConc,
-  #endif
 ) where
 
 import Polysemy.Log.Atomic (interpretDataLogAtomic, interpretDataLogAtomic', interpretLogAtomic, interpretLogAtomic')
-#ifndef mingw32_HOST_OS
-import Polysemy.Log.Conc (interceptDataLogConc)
-#endif
 import Polysemy.Log.Effect.DataLog (DataLog (DataLog), Logger, dataLog, local)
 import Polysemy.Log.Effect.Log (Log (Log), crit, debug, error, info, log, trace, warn)
 import Polysemy.Log.Data.LogEntry (LogEntry (LogEntry))
@@ -89,9 +73,6 @@ import Polysemy.Log.Log (
   interpretDataLog,
   interpretLogDataLog,
   interpretLogDataLog',
-  #ifndef mingw32_HOST_OS
-  interpretLogDataLogConc,
-  #endif
   )
 import Polysemy.Log.Pure (interpretLogNull, interpretLogOutput)
 import Polysemy.Log.Stderr (
@@ -99,13 +80,7 @@ import Polysemy.Log.Stderr (
   interpretDataLogStderrWith,
   interpretLogStderr,
   interpretLogStderr',
-  #ifndef mingw32_HOST_OS
-  interpretLogStderrConc,
-  #endif
   interpretLogStderrLevel,
-  #ifndef mingw32_HOST_OS
-  interpretLogStderrLevelConc,
-  #endif
   interpretLogStderrLevelWith,
   interpretLogStderrWith,
   )
@@ -114,13 +89,7 @@ import Polysemy.Log.Stdout (
   interpretDataLogStdoutWith,
   interpretLogStdout,
   interpretLogStdout',
-  #ifndef mingw32_HOST_OS
-  interpretLogStdoutConc,
-  #endif
   interpretLogStdoutLevel,
-  #ifndef mingw32_HOST_OS
-  interpretLogStdoutLevelConc,
-  #endif
   interpretLogStdoutLevelWith,
   interpretLogStdoutWith,
   )
