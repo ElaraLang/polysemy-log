@@ -1,11 +1,11 @@
 cabal-version: 2.2
 
--- This file has been generated from package.yaml by hpack version 0.35.2.
+-- This file has been generated from package.yaml by hpack version 0.36.0.
 --
 -- see: https://github.com/sol/hpack
 
 name:           polysemy-log
-version:        0.10.0.1
+version:        0.11.0.0
 synopsis:       Polysemy effects for logging
 description:    See https://hackage.haskell.org/package/polysemy-log/docs/Polysemy-Log.html
 category:       Logging
@@ -59,6 +59,7 @@ library
       GADTs
       LambdaCase
       LiberalTypeSynonyms
+      MonadComprehensions
       MultiWayIf
       OverloadedLabels
       OverloadedLists
@@ -81,17 +82,14 @@ library
       NoFieldSelectors
   ghc-options: -Wall -Widentities -Wincomplete-uni-patterns -Wmissing-deriving-strategies -Wredundant-constraints -Wunused-type-patterns -Wunused-packages
   build-depends:
-      ansi-terminal >=0.10.3
-    , async
-    , base ==4.*
-    , incipit-core >=0.4 && <0.6
-    , polysemy ==1.9.*
-    , polysemy-time ==0.6.*
-    , stm
-    , time
-  if !os(windows)
-    build-depends:
-      polysemy-conc >=0.12 && <0.14
+      ansi-terminal >=0.9 && <1.1
+    , async >=2.2.4 && <2.3
+    , base >=4.17.2.1 && <4.20
+    , incipit-core >=0.4.1.0 && <0.7
+    , polysemy >=1.7.0.0 && <1.10
+    , polysemy-time >=0.6.0.0 && <0.8
+    , stm >=2.5.1.0 && <2.6
+    , time >=1.12.2 && <1.13
   mixins:
       base hiding (Prelude)
     , incipit-core (IncipitCore as Prelude)
@@ -127,6 +125,7 @@ test-suite polysemy-log-test
       GADTs
       LambdaCase
       LiberalTypeSynonyms
+      MonadComprehensions
       MultiWayIf
       OverloadedLabels
       OverloadedLists
@@ -149,6 +148,7 @@ test-suite polysemy-log-test
       NoFieldSelectors
   ghc-options: -threaded -rtsopts -with-rtsopts=-N -Wall -Widentities -Wincomplete-uni-patterns -Wmissing-deriving-strategies -Wredundant-constraints -Wunused-type-patterns -Wunused-packages
   build-depends:
+<<<<<<< HEAD
       base ==4.*
     , incipit-core >=0.4 && <0.6
     , polysemy ==1.9.*
@@ -161,6 +161,18 @@ test-suite polysemy-log-test
   if !os(windows)
     build-depends:
       polysemy-conc >=0.12 && <0.14
+=======
+      base >=4.17.2.1 && <4.20
+    , incipit-core >=0.4.1.0 && <0.7
+    , polysemy >=1.7.0.0 && <1.10
+    , polysemy-conc >=0.11.1.0 && <0.15
+    , polysemy-log
+    , polysemy-plugin >=0.4.4.0 && <0.5
+    , polysemy-test >=0.6.0.0 && <0.11
+    , polysemy-time >=0.6.0.0 && <0.8
+    , tasty >=1.4.2 && <1.5
+    , time >=1.12.2 && <1.13
+>>>>>>> upstream/main
   mixins:
       base hiding (Prelude)
     , incipit-core (IncipitCore as Prelude)
@@ -187,6 +199,7 @@ benchmark space
       GADTs
       LambdaCase
       LiberalTypeSynonyms
+      MonadComprehensions
       MultiWayIf
       OverloadedLabels
       OverloadedLists
@@ -209,6 +222,7 @@ benchmark space
       NoFieldSelectors
   ghc-options: -Wall -Widentities -Wincomplete-uni-patterns -Wmissing-deriving-strategies -Wredundant-constraints -Wunused-type-patterns -Wunused-packages
   build-depends:
+<<<<<<< HEAD
       base ==4.*
     , incipit-core >=0.4 && <0.6
     , polysemy ==1.9.*
@@ -217,6 +231,14 @@ benchmark space
   if !os(windows)
     build-depends:
       polysemy-conc
+=======
+      base >=4.17.2.1 && <4.20
+    , incipit-core >=0.4.1.0 && <0.7
+    , polysemy >=1.7.0.0 && <1.10
+    , polysemy-conc >=0.11.1.0 && <0.15
+    , polysemy-log
+    , polysemy-plugin >=0.4.4.0 && <0.5
+>>>>>>> upstream/main
   mixins:
       base hiding (Prelude)
     , incipit-core (IncipitCore as Prelude)
